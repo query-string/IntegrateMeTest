@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180322155221) do
+ActiveRecord::Schema.define(version: 20180322160635) do
 
 # Could not dump table "competitions" because of following NoMethodError
 #   undefined method `[]' for nil:NilClass
@@ -20,8 +20,9 @@ ActiveRecord::Schema.define(version: 20180322155221) do
     t.integer  "competition_id"
     t.text     "name"
     t.text     "email"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.string   "state",          default: "pending", null: false
   end
 
   add_index "entries", ["competition_id", "email"], name: "index_entries_on_competition_id_and_email", unique: true
