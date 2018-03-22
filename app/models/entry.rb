@@ -11,6 +11,10 @@ class Entry < ActiveRecord::Base
   validates_presence_of :name, if: :requires_name
   validates_uniqueness_of :email, scope: :competition, message: "has already entered this competition"
 
+  %i[first last].each do |part|
+    define_method("#{part}_name") { self.send('full_name').send(part) }
+  end
+
   private
     def clean_email
       self.email = email.downcase.strip if email.present?
@@ -18,5 +22,9 @@ class Entry < ActiveRecord::Base
 
     def requires_name
       competition.requires_entry_name?
+    end
+
+    def full_name
+      name.present? ? name.split : [email.split('@').first]
     end
 end
