@@ -6,6 +6,11 @@ class Competition < ActiveRecord::Base
     get_lists.select { |l| l['name'] == name }.first[attribute.to_s]
   end
 
+  def list_id
+    update_column(:mailchimp_list_id, get_list(:id)) unless mailchimp_list_id.present?
+    mailchimp_list_id
+  end
+
   private
 
   def get_lists
