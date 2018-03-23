@@ -1,0 +1,13 @@
+DEFAULTS: &DEFAULTS
+  email: alex@query-string.com
+
+entry_nameless:
+  <<: *DEFAULTS
+
+entry_shortname:
+  <<: *DEFAULTS
+  name: Alexander
+
+entry_fullname:
+  <<: *DEFAULTS
+  name: Alexander Timofeev
