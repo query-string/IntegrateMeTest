@@ -2,7 +2,20 @@ class MailChimp::SubscribeEntryJob < ActiveJob::Base
   queue_as :default
 
   def perform(entry)
-    competition  = entry.competition
+    competition = entry.competition
+    entry.update(state: :processing)
+
+    begin
+      request_entry entry, competition
+      entry.update(state: :completed)
+    rescue Gibbon::MailChimpError => e
+      entry.update(state: :failed)
+    end
+  end
+
+  private
+
+  def request_entry(entry, competition)
     request_body = {
       body: {
         email_address: entry.email,
