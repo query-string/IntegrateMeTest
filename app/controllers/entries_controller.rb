@@ -1,15 +1,19 @@
 class EntriesController < ApplicationController
 
-  # POST /entries.json
   def create
     @entry = Entry.new(entry_params)
 
     if @entry.save
       MailChimp::SubscribeEntryJob.perform_later(@entry)
-      render json: {success: true}
+      render json: { success: true }
     else
-      render json: {success: false, errors: @entry.errors}
+      render json: { success: false, errors: @entry.errors }
     end
+  end
+
+  def show
+    @entry = Entry.find(params[:id])
+    render json: { entry: { id: @entry.id, state: @entry.state, log: @entry.mailchimp_error_log } }
   end
 
   private
