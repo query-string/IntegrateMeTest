@@ -1,0 +1,5 @@
+competition:
+  name: Test environment list
+
+competition_inexistent:
+  name: Inexistent name list
