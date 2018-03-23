@@ -11,3 +11,4 @@ entry_shortname:
 entry_fullname:
   <<: *DEFAULTS
   name: Alexander Timofeev
+  competition: competition

@@ -3,6 +3,8 @@ class MailChimp::SubscribeEntryJob < ActiveJob::Base
 
   def perform(entry)
     competition = entry.competition
+    raise ArgumentError, 'No competitions associated to the entry' unless competition
+
     entry.update(state: :processing)
 
     begin
