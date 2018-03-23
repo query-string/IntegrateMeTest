@@ -4,7 +4,7 @@
 
 .entry {
   font-weight: bold;
-  
+
   &--pending, &--processing {
     color: orange;
   }
@@ -12,6 +12,6 @@
     color: green;
   }
   &--failed {
-    color: green;
+    color: red;
   }
 }

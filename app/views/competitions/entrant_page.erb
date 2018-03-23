@@ -30,6 +30,10 @@
   </div>
   <div ng-if="ctrl.entry.completed">
     <p>Thank you for entering our competition!</p>
-    <p class="entry entry--{{ctrl.entry.state}}">Entry state: {{ctrl.entry.state}}</p>
+    <div class="entry entry--{{ctrl.entry.state}}">
+      <p>Entry state: {{ctrl.entry.state}}</p>
+      <p ng-if="ctrl.entry.log">{{ctrl.entry.log}}</p>
+    </div>
+    <a href='#' ng-click="ctrl.refresh()">Refresh</a>
   </div>
 </div>
