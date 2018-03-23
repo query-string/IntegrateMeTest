@@ -5,7 +5,7 @@ class EntriesController < ApplicationController
 
     if @entry.save
       MailChimp::SubscribeEntryJob.perform_later(@entry)
-      render json: { success: true }
+      render json: { success: true, entry: { state: @entry.state } }
     else
       render json: { success: false, errors: @entry.errors }
     end

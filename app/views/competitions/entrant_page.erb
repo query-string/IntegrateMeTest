@@ -30,5 +30,6 @@
   </div>
   <div ng-if="ctrl.entry.completed">
     <p>Thank you for entering our competition!</p>
+    <p class="entry entry--{{ctrl.entry.state}}">Entry state: {{ctrl.entry.state}}</p>
   </div>
 </div>

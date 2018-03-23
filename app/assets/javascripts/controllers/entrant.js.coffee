@@ -11,6 +11,7 @@ angular.module('integrate', []).controller('EntrantController', ($scope, $http) 
 
         if data.success
           self.entry.completed = true
+          self.entry.state = data.entry.state
         else
           self.errors = data.errors
 
