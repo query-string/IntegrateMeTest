@@ -9,7 +9,7 @@ class MailChimp::SubscribeEntryJob < ActiveJob::Base
       request_entry entry, competition
       entry.update(state: :completed)
     rescue Gibbon::MailChimpError => e
-      entry.update(state: :failed)
+      entry.update(state: :failed, mailchimp_error_log: e.raw_body)
     end
   end
 
