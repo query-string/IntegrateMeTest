@@ -1,5 +1,13 @@
+DEFAULTS: &DEFAULTS
+  mailchimp_api_key: <%= ENV['MAILCHIMP_KEY'] %>
+
 competition:
+  <<: *DEFAULTS
   name: Test environment list
 
 competition_inexistent:
+  <<: *DEFAULTS
   name: Inexistent name list
+
+competition_keyless:
+  name: No API key defined

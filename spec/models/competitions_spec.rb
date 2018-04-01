@@ -13,6 +13,13 @@ describe Competition do
     describe '#list_id' do
       subject { competition.list_id }
 
+      context 'when does not have API key' do
+        let(:competition) { competitions(:competition_keyless) }
+        it 'raises an execption' do
+          expect { subject }.to raise_error(ArgumentError, 'MailChimp API key is not defined')
+        end
+      end
+
       context 'when associated list does not exit yet' do
         let(:competition) { competitions(:competition_inexistent) }
         it 'raises an execption' do
