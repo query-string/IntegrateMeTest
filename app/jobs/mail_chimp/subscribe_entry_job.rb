@@ -4,6 +4,7 @@ class MailChimp::SubscribeEntryJob < ActiveJob::Base
   def perform(entry)
     competition = entry.competition
     raise ArgumentError, 'No competitions associated to the entry' unless competition
+    raise ArgumentError, 'MailChimp API key is not defined' unless competition.mailchimp_api_key.present?
 
     entry.update(state: :processing)
 
@@ -26,7 +27,7 @@ class MailChimp::SubscribeEntryJob < ActiveJob::Base
       }
     }
 
-    Gibbon::Request.new(api_key: MAILCHIMP_API_KEY)
+    Gibbon::Request.new(api_key: competition.mailchimp_api_key)
       .lists(competition.list_id)
       .members
       .create(request_body)

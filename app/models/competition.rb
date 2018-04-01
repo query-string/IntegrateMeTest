@@ -16,6 +16,7 @@ class Competition < ActiveRecord::Base
   private
 
   def get_lists
-    Gibbon::Request.lists.retrieve.body['lists']
+    raise ArgumentError, 'MailChimp API key is not defined' unless mailchimp_api_key.present?
+    Gibbon::Request.new(api_key: mailchimp_api_key).lists.retrieve.body['lists']
   end
 end
