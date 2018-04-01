@@ -31,8 +31,16 @@
         })
       },
       setList: function(list) {
-        console.log(list.id)
-        console.log(this.apiKey)
+        axios.put('/api/v1/competitions/2', {
+          params: {
+            competition: {
+              mailchimp_key: this.apiKey,
+              mailchimp_list_id: list.id
+            }
+          }
+        }).then(response => {
+          this.listsState = false
+        })
       }
     }
   }

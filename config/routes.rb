@@ -5,12 +5,15 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'welcome#index'
-  get ':competition_id/:permalink' => 'competitions#entrant_page', constraints: {competition_id: /\d+/}
+
+  get ':competition_id/:permalink' => 'competitions#entrant_page', constraints: { competition_id: /\d+/ }
+
   resources :entries, only: %i[create show]
 
   namespace :api do
     namespace :v1 do
       get 'mailchimp/proxy' => 'mailchimp#proxy'
+      put 'competitions/:id' => 'competitions#update', constraints: { id: /\d+/ }
     end
   end
 
