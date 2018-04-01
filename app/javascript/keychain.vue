@@ -1,22 +1,24 @@
 <template>
-  <div id='keychain' :class="['keychain keychain--open-' + panelState]">
-    <a class='keychain__shortcut' v-on:click='panelState = !panelState'>Show keys</a>
+  <div id='keychain'>
+    <div :class="['keychain keychain--open-' + panelState]">
+      <a class='keychain__shortcut' v-on:click='panelState = !panelState'>Show keys</a>
 
-    <div :class="['keychain__body keychain__body--visible-' + !fieldState]">
-      <b>🗝️ Admin Keychain</b>
-      <p>
-        Type your MailChimp API key in order to manage subscription lists &rarr; <span title='Change key' :class="['keychain__bullets keychain__bullets--' + bulletsState]" v-on:click='showField'>&bull;&bull;&bull;&bull;&bull;&bull;&bull;</span>
-      </p>
+      <div :class="['keychain__body keychain__body--visible-' + !fieldState]">
+        <b>🗝️ Admin Keychain</b>
+        <p>
+          Type your MailChimp API key in order to manage subscription lists &rarr; <span title='Change key' :class="['keychain__bullets keychain__bullets--' + bulletsState]" v-on:click='showField'>&bull;&bull;&bull;&bull;&bull;&bull;&bull;</span>
+        </p>
+      </div>
+
+      <input
+        type='text'
+        placeholder='Mailchimp API key'
+        ref='field'
+        :class="['keychain__field keychain__field--visible-' + fieldState]"
+        v-model='apiKey'
+        v-on:keyup.enter='submitField'
+      />
     </div>
-
-    <input
-      type='text'
-      placeholder='Mailchimp API key'
-      ref='field'
-      :class="['keychain__field keychain__field--visible-' + fieldState]"
-      v-model='apiKey'
-      v-on:keyup.enter='submitField'
-    />
   </div>
 </template>
 
@@ -25,7 +27,7 @@
   import store from 'store2'
 
   export default {
-    data: function () {
+    data() {
       return {
         panelState: false,
         fieldState: false,

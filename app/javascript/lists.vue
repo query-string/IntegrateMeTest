@@ -1,6 +1,6 @@
 <template>
   <div id='lists' class='lists'>
-    <a class='lists__handler' v-on:click='showLists'>Attach MaliChimp list ▼</a>
+    <a class='lists__handler' v-on:click='showLists'>{{ name }} ▼</a>
     <ul :class="['lists__items lists__items--open-' + listsState]">
       <li v-for='item in listItems' :key='item.id' v-on:click='setList(item)'>{{ item.name }}</li>
     </ul>
@@ -12,8 +12,10 @@
   import store from 'store2'
 
   export default {
-    data: function () {
+    props: ['competition'],
+    data () {
       return {
+        name: 'Attach MaliChimp list',
         listsState: false,
         listItems: [],
         apiKey: store.namespace('global').get('apiKey')
@@ -31,14 +33,13 @@
         })
       },
       setList: function(list) {
-        axios.put('/api/v1/competitions/2', {
-          params: {
-            competition: {
-              mailchimp_key: this.apiKey,
-              mailchimp_list_id: list.id
-            }
+        axios.put('/api/v1/competitions/' + this.competition.id, {
+          competition: {
+            mailchimp_list_id: list.id,
+            mailchimp_api_key: this.apiKey
           }
         }).then(response => {
+          this.name = list.name
           this.listsState = false
         })
       }

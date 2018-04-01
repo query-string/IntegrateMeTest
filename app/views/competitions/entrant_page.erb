@@ -1,6 +1,8 @@
 <div ng-controller="EntrantController as ctrl" ng-init="ctrl.init(<%= entrant_init(@entry) %>)">
   <h1>{{ctrl.competition.name}}</h1>
-  <span id='lists'></span>
+
+  <% props = { competition: { id: params[:competition_id] } }.to_json %>
+  <span id='lists' data="<%= props %>"></span>
 
   <div ng-if="!ctrl.entry.completed">
     <p>Enter your details to win!</p>
