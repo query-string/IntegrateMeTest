@@ -1,11 +1,11 @@
 <template>
-  <div id='keychain' :class="['keychain keychain--open-' + openState]">
-    <a class='keychain__shortcut' v-on:click='openState = !openState'>Show keys</a>
+  <div id='keychain' :class="['keychain keychain--open-' + panelState]">
+    <a class='keychain__shortcut' v-on:click='panelState = !panelState'>Show keys</a>
 
     <div :class="['keychain__body keychain__body--visible-' + !fieldState]">
       <b>🗝️ Admin Keychain</b>
       <p>
-        Type your MailChimp API key in order to manage subscription lists &rarr; <span title='Change key' v-on:click='showField'>&bull;&bull;&bull;&bull;&bull;&bull;&bull;</span>
+        Type your MailChimp API key in order to manage subscription lists &rarr; <span :class="['keychain__bullets keychain__bullets--' + bulletsState]" title='Change key' v-on:click='showField'>&bull;&bull;&bull;&bull;&bull;&bull;&bull;</span>
       </p>
     </div>
 
@@ -22,12 +22,15 @@
 
 <script>
   import axios from 'axios'
+  import store from 'store2'
+
   export default {
     data: function () {
       return {
-        openState:  true,
+        panelState: false,
         fieldState: false,
-        apiKey: null
+        bulletsState: 'normal',
+        apiKey: store.namespace('global').get('apiKey')
       }
     },
     methods: {
@@ -38,9 +41,19 @@
       submitField: function (event) {
         this.fieldState = false
         this.apiKey = event.target.value
-        this.validateApi()
+        this.requestApi()
       },
-      validateApi: function() {
+      requestApi: function() {
+        axios.get('/api/v1/mailchimp/proxy', {
+          params: {
+            api_key: this.apiKey
+          }
+        }).then(response => {
+          this.bulletsState = 'success'
+          store.namespace('global').set('apiKey', this.apiKey)
+        }).catch(error => {
+          this.bulletsState = 'error'
+        })
       }
     }
   }
@@ -57,7 +70,7 @@
     height: 69px;
     overflow: hidden;
     background: $base-color;
-    color: #FFF;
+    color: white;
     transition: width 0.5s;
 
     &--open-true {
@@ -99,13 +112,26 @@
         padding: 0;
         position: relative;
       }
-      span {
-        display: inline-block;
-        margin-left: 7px;
-        padding-bottom: 5px;
-        border-bottom: 1px dashed #FFF;
-        font-size: 2em;
-        cursor: text;
+    }
+
+    &__bullets {
+      display: inline-block;
+      margin-left: 7px;
+      padding-bottom: 5px;
+      font-size: 2em;
+      cursor: text;
+
+      &--normal {
+        color: white;
+        border-bottom: 1px dashed white;
+      }
+      &--error {
+        color: pink;
+        border-bottom: 1px dashed pink;
+      }
+      &--success {
+        color: springgreen;
+        border-bottom: 1px dashed springgreen;
       }
     }
 
