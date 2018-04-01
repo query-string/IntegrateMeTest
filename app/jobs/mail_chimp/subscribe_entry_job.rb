@@ -26,7 +26,7 @@ class MailChimp::SubscribeEntryJob < ActiveJob::Base
       }
     }
 
-    Gibbon::Request
+    Gibbon::Request.new(api_key: MAILCHIMP_API_KEY)
       .lists(competition.list_id)
       .members
       .create(request_body)

@@ -8,6 +8,12 @@ Rails.application.routes.draw do
   get ':competition_id/:permalink' => 'competitions#entrant_page', constraints: {competition_id: /\d+/}
   resources :entries, only: %i[create show]
 
+  namespace :api do
+    namespace :v1 do
+      get 'mailchimp/proxy' => 'mailchimp#proxy'
+    end
+  end
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

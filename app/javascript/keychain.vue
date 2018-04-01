@@ -21,6 +21,7 @@
 </template>
 
 <script>
+  import axios from 'axios'
   export default {
     data: function () {
       return {
@@ -37,6 +38,9 @@
       submitField: function (event) {
         this.fieldState = false
         this.apiKey = event.target.value
+        this.validateApi()
+      },
+      validateApi: function() {
       }
     }
   }
