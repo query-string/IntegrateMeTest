@@ -34,10 +34,10 @@ RSpec.describe MailChimp::SubscribeEntryJob, type: :job do
     let(:email)       { Faker::Internet.unique.email }
     let(:entry)       { Entry.create(name: name, email: email, competition_id: competition.id) }
     let(:competition) { competitions(:competition) }
-    let(:members)     { Gibbon::Request.lists(competition.list_id).members.retrieve(params: { status: 'subscribed' }).body['members'] }
+    let(:members)     { Gibbon::Request.new(api_key: MAILCHIMP_API_KEY).lists(competition.list_id).members.retrieve(params: { status: 'subscribed' }).body['members'] }
 
     after do
-      Gibbon::Request.lists(competition.list_id)
+      Gibbon::Request.new(api_key: MAILCHIMP_API_KEY).lists(competition.list_id)
         .members(Digest::MD5.hexdigest(email))
         .update(body: { status: 'unsubscribed' })
     end

@@ -15,7 +15,7 @@ describe Api::V1::MailchimpController, type: :request do
     end
 
     context 'when MailChimp API key is valid' do
-      let(:api_key) { ENV['MAILCHIMP_KEY'] }
+      let(:api_key) { MAILCHIMP_API_KEY }
 
       it 'returns ok header' do
         expect(response).to have_http_status(:ok)

@@ -2,6 +2,8 @@ class Competition < ActiveRecord::Base
   has_many :entries, inverse_of: :competition
   validates_presence_of :name
 
+  after_create { |record| record.update_column(:mailchimp_api_key, MAILCHIMP_API_KEY) }
+
   def list_id
     update_column(:mailchimp_list_id, get_list(:id)) unless mailchimp_list_id.present?
     mailchimp_list_id

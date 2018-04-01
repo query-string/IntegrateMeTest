@@ -1,5 +1,5 @@
 DEFAULTS: &DEFAULTS
-  mailchimp_api_key: <%= ENV['MAILCHIMP_KEY'] %>
+  mailchimp_api_key: <%= MAILCHIMP_API_KEY %>
 
 competition:
   <<: *DEFAULTS
