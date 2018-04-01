@@ -5,7 +5,7 @@
     <div :class="['keychain__body keychain__body--visible-' + !fieldState]">
       <b>🗝️ Admin Keychain</b>
       <p>
-        Type your MailChimp API key in order to manage subscription lists &rarr; <span :class="['keychain__bullets keychain__bullets--' + bulletsState]" title='Change key' v-on:click='showField'>&bull;&bull;&bull;&bull;&bull;&bull;&bull;</span>
+        Type your MailChimp API key in order to manage subscription lists &rarr; <span title='Change key' :class="['keychain__bullets keychain__bullets--' + bulletsState]" v-on:click='showField'>&bull;&bull;&bull;&bull;&bull;&bull;&bull;</span>
       </p>
     </div>
 

@@ -9,11 +9,10 @@
 
 import Vue from 'vue'
 import Keychain from '../keychain.vue'
+import Lists from '../lists.vue'
 
 document.addEventListener('DOMContentLoaded', () => {
-  const el = document.body.appendChild(document.createElement('keychain'))
-  const keychain = new Vue({
-    el,
-    render: h => h(Keychain)
-  })
+  const el       = document.body.appendChild(document.createElement('keychain'))
+  const keychain = new Vue({ el, render: h => h(Keychain) })
+  const lists    = new Vue({ el: '#lists', render: h => h(Lists) })
 })
